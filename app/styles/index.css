@@ -154,6 +154,26 @@ main {
   color: var(--primary);
   text-decoration: none;
 }
-.error-enlace:hover{
+.error-enlace:hover {
   color: #8b5800;
+}
+
+/* enlace */
+.enlace {
+  margin-top: 2rem;
+  padding: 1rem;
+  display: block;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition-property: background-color;
+  transition-duration: 300ms;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.enlace:hover {
+  background-color: var(--primary);
 }

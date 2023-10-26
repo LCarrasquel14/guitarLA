@@ -14,8 +14,8 @@ export function links() {
 }
 
 export async function loader() {
+  
   const data = await getData(`${process.env.API_URL}/guitars?populate=*`);
-
   return data.data;
 }
 

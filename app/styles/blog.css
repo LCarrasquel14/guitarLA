@@ -1,0 +1,51 @@
+.blog {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+}
+@media (min-width: 768px) {
+  .blog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 992px) {
+  .blog {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.post {
+}
+
+.post .content {
+  padding: 1.5rem;
+}
+
+.post .content h3 {
+  font-weight: 900;
+  font-size: 2.8rem;
+  margin: 0;
+}
+
+.post .date {
+  font-size: 1.6rem;
+  color: var(--primary);
+}
+
+.post .summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+}
+
+/* postFilter */
+
+.publishing {
+  max-width: 80rem;
+  margin: 3rem auto 0 auto;
+}
+
+.publishing .text {
+  white-space: pre-wrap;
+}
