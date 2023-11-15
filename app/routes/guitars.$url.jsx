@@ -1,4 +1,9 @@
-import { useLoaderData, useRouteError } from "@remix-run/react";
+import { useState } from "react";
+import {
+  useLoaderData,
+  useRouteError,
+  useOutletContext,
+} from "@remix-run/react";
 import { getGuitar } from "~/helpers/getData";
 import styles from "~/styles/guitar.css";
 
@@ -40,9 +45,27 @@ export function links() {
 }
 
 const Guitar = () => {
+  const { agregaAlCarrito } = useOutletContext();
+  const [cantidad, setCantidad] = useState(0);
   const guitarData = useLoaderData();
   const { name, price, description, guitarImagen } =
     guitarData.data[0].attributes;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (cantidad < 1) {
+      alert("debes agregar una cantidad");
+      return;
+    }
+    const guitarraSeleccionada = {
+      id: guitarData.data[0].id,
+      imagen: guitarImagen.data.attributes.formats.small.url,
+      name,
+      price,
+      cantidad,
+    };
+    agregaAlCarrito(guitarraSeleccionada);
+  };
+
   return (
     <main className="container guitarra">
       <img
@@ -54,6 +77,23 @@ const Guitar = () => {
         <h3>{name}</h3>
         <p className="text">{description}</p>
         <p className="price">{`$${price}`}</p>
+
+        <form onSubmit={handleSubmit} className="form">
+          <label htmlFor="amount">amount</label>
+
+          <select
+            onChange={(e) => setCantidad(parseInt(e.target.value))}
+            id="amount"
+          >
+            <option value="">--Select -- </option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <input type="submit" value="add to cart" />
+        </form>
       </div>
     </main>
   );

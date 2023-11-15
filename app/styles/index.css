@@ -72,6 +72,7 @@ main {
 
 .header .navigation {
   display: flex;
+  align-items: center;
   gap: 2rem;
 }
 
@@ -84,6 +85,10 @@ main {
   padding: 0.5rem;
   transition-property: background-color;
   transition-duration: 0.5s;
+}
+
+.header .navigation img {
+  width: 30px;
 }
 
 .header .navigation a:hover,
@@ -134,9 +139,12 @@ main {
   text-decoration: none;
   font-weight: 700;
 }
-
-.footer .copyright {
+.footer .navigation a .footer .copyright {
   text-align: center;
+}
+
+.footer .navigation a:last-of-type {
+  display: none;
 }
 
 /* error */

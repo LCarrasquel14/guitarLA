@@ -38,3 +38,8 @@ export async function getPostFilter(url) {
   return response;
 }
 
+export async function getInfo(file) {
+  const consult = await fetch(`${process.env.API_URL}/${file}?populate=*`);
+  const response = consult.json();
+  return response;
+}

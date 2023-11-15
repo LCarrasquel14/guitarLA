@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Meta,
   Links,
@@ -52,9 +53,60 @@ export const links = () => {
 };
 
 export default function App() {
+  const carritoLS =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("carrito")) ?? []
+      : [];
+  const [carrito, setCarrito] = useState(carritoLS);
+
+  useEffect(
+    () => localStorage.setItem("carrito", JSON.stringify(carrito)),
+    [carrito]
+  );
+
+  const agregaAlCarrito = (guitarra) => {
+    if (carrito.some((guitarraState) => guitarraState.id === guitarra.id)) {
+      //iterar sobre el arreglo  e identificar  el elemento duplicado
+      const carritoActualizado = carrito.map((guitarraState) => {
+        if (guitarraState.id === guitarra.id) {
+          //reescribir la cantidad
+          guitarraState.cantidad = guitarra.cantidad;
+        }
+        return guitarraState;
+      });
+      //Añadir al carrito
+      setCarrito(carritoActualizado);
+    } else {
+      //registro nuevo, agregar al carrito
+      setCarrito([...carrito, guitarra]);
+    }
+  };
+  const actualizarCantidad = (guitar) => {
+    const carritoActualizado = carrito.map((guitarState) => {
+      if (guitarState.id === guitar.id) {
+        guitarState.cantidad = guitar.cantidad;
+      }
+      return guitarState;
+    });
+    setCarrito(carritoActualizado);
+  };
+
+  const eliminarGuitarra = (id) => {
+    const carritoActualizado = carrito.filter(
+      (guitarState) => guitarState.id !== id
+    );
+    setCarrito(carritoActualizado);
+  };
   return (
     <Document>
-      <Outlet />
+      <Outlet
+        context={{
+          agregaAlCarrito,
+          carrito,
+          actualizarCantidad,
+          eliminarGuitarra,
+        }}
+      />
       <LiveReload />
     </Document>
   );
@@ -87,7 +139,9 @@ export function ErrorBoundary() {
       <Document>
         <p className="error">
           {error.status} {error.statusText}
-          <Link className="error-enlace" to={"/"}>Click para volver a la pagina pricipal</Link>
+          <Link className="error-enlace" to={"/"}>
+            Click para volver a la pagina pricipal
+          </Link>
         </p>
       </Document>
     );
